@@ -51,11 +51,31 @@ public class FirstTest {
      5
     );
 
-
     waitForElementPresentByXpath(
       "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']",
       "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
       5
+    );
+  }
+
+  @Test
+  public void testCancelSearsh(){
+    waitForElementByIdAndClick(
+            "org.wikipedia:id/search_container",
+            "Cannot find Search Wikipedia input",
+            5
+    );
+
+    waitForElementByIdAndClick(
+            "org.wikipedia:id/search_close_btn",
+            "Cannot find X to cancel search",
+            5
+    );
+
+    waitForElementNotPresent(
+            "org.wikipedia:id/search_close_btn",
+            "X ids still present on the page",
+            5
     );
   }
 
@@ -65,6 +85,20 @@ public class FirstTest {
     By by = By.xpath(xpath);
 
     return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+  }
+
+  private WebElement waitForElementPresentById(String id, String errorMessage, long timeoutInSeconds){
+    WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+    wait.withMessage(errorMessage + "\n");
+    By by = By.id(id);
+
+    return wait.until(ExpectedConditions.presenceOfElementLocated(by));
+  }
+
+  private WebElement waitForElementByIdAndClick(String id, String errorMessage, long timeoutInSeconds){
+    WebElement element = waitForElementPresentById(id, errorMessage, timeoutInSeconds);
+    element.click();
+    return element;
   }
 
   private WebElement waitForElementPresentByXpath(String xpath, String errorMessage){
@@ -81,5 +115,13 @@ public class FirstTest {
     WebElement element = waitForElementPresentByXpath(xpath, errorMessage, timeoutInSeconds);
     element.sendKeys(value);
     return element;
+  }
+
+  private boolean waitForElementNotPresent(String id, String errorMessage, long timeoutSeconds){
+    WebDriverWait wait = new WebDriverWait(driver,timeoutSeconds);
+    wait.withMessage(errorMessage = "\n");
+    By by = By.id(id);
+
+    return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
   }
 }
