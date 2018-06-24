@@ -36,7 +36,7 @@ public class FirstTest {
   }
 
   @Test
-  public void firstTest(){
+  public void testCompareArticleTitle(){
 
     waitForElementAndClick(
      By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
@@ -79,6 +79,40 @@ public class FirstTest {
     );
   }
 
+  @Test
+  public void testClearField(){
+    waitForElementAndClick(
+            By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+            "Cannot find Search Wikipedia input",
+            5
+    );
+
+    waitForElementAndSendKeys(
+            By.xpath("//*[contains(@text, 'Search…')]"),
+            "Java",
+            "Cannot find search input",
+            5
+    );
+
+    waitForElementAndClear(
+            By.id("org.wikipedia:id/search_src_text"),
+            "Cannot find search input",
+            5
+    );
+
+    waitForElementAndClick(
+            By.id("org.wikipedia:id/search_close_btn"),
+            "Cannot find X to cancel search",
+            5
+    );
+
+    waitForElementNotPresent(
+            By.id("org.wikipedia:id/search_close_btn"),
+            "X ids still present on the page",
+            5
+    );
+  }
+
   private WebElement waitForElementAndClick(By by, String errorMessage, long timeoutInSeconds){
     WebElement element = waitForElementPresent(by, errorMessage, timeoutInSeconds);
     element.click();
@@ -103,5 +137,11 @@ public class FirstTest {
     wait.withMessage(errorMessage = "\n");
 
     return wait.until(ExpectedConditions.invisibilityOfElementLocated(by));
+  }
+
+  private WebElement waitForElementAndClear(By by, String errorMessage, long timeoutSeconds){
+    WebElement element = waitForElementPresent(by, errorMessage, timeoutSeconds);
+    element.clear();
+    return element;
   }
 }
