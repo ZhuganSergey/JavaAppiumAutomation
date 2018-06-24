@@ -45,7 +45,12 @@ public class FirstTest {
             "Cannot find search input"
     );
 
-    elementToEnterSearchLine.sendKeys("Appium");
+    elementToEnterSearchLine.sendKeys("Java");
+    waitForElementPresentByXpath(
+            "//*[@resource-id='org.wikipedia:id/page_list_item_container']//*[@text='Object-oriented programming language']",
+            "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+            5
+    );
 
   }
 
