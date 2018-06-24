@@ -150,6 +150,32 @@ public class FirstTest {
     );
 
   }
+  //org.wikipedia:id/search_src_text
+  //Search…
+
+  @Test
+  public void testSearchTextPresent(){
+    waitForElementAndClick(
+      By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+     "Cannot find Search Wikipedia input",
+     5
+    );
+
+    WebElement searchFieldElement = waitForElementPresent(
+      By.id("org.wikipedia:id/search_src_text"),
+     "Cannot find Search field",
+     15
+    );
+
+    String searchFieldElementText = searchFieldElement.getAttribute("text");
+
+    Assert.assertEquals(
+     "We see unexpected text",
+     "Search…",
+      searchFieldElementText
+    );
+
+  }
 
   private WebElement waitForElementAndClick(By by, String errorMessage, long timeoutInSeconds){
     WebElement element = waitForElementPresent(by, errorMessage, timeoutInSeconds);
