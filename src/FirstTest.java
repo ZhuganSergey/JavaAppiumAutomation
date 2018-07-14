@@ -612,9 +612,9 @@ public class FirstTest {
   }
 
   private void assertElementNotPresent(By by, String errorMessage){
-    int ammountOgElements = getAmountElements(by);
+    int amountOfElements = getAmountElements(by);
 
-    if (ammountOgElements > 0) {
+    if (amountOfElements > 0) {
       String defaultMessage = "An element '" + by.toString() + "' supposed to be not present";
       throw new AssertionError(defaultMessage + " " + errorMessage);
     }
