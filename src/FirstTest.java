@@ -543,6 +543,192 @@ public class FirstTest {
     );
   }
 
+  @Test
+  public void testTwoArticleSaving(){
+    waitForElementAndClick(
+            By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+            "Cannot find Search Wikipedia input",
+            5
+    );
+
+    String searchLine = "Java";
+    String firstAtricleDescription = "Object-oriented programming language";
+
+
+    waitForElementAndSendKeys(
+            By.xpath("//*[contains(@text, 'Search…')]"),
+            searchLine,
+            "Cannot find search input",
+            5
+    );
+
+    String descriptionXPathLocator = "//*[@resource-id='org.wikipedia:id/page_list_item_description']";
+
+    waitForElementAndClick(
+            By.xpath(descriptionXPathLocator + "[@text='" + firstAtricleDescription + "']"),
+            "Cannot find '" + firstAtricleDescription + "'",
+            5
+    );
+
+    String firstArticleTitleName = "Java (programming language)";
+    String titleXPathLocator = "//*[@resource-id='org.wikipedia:id/view_page_title_text']";
+
+    waitForElementPresent(
+            By.xpath(titleXPathLocator + "[@text='" + firstArticleTitleName + "']"),
+            "Cannot find article title",
+            15
+    );
+
+    String moreOptionsButtonXPathLocator = "//android.widget.ImageView[@content-desc='More options']";
+
+    waitForElementAndClick(
+            By.xpath(moreOptionsButtonXPathLocator),
+            "Cannot find 'More options' button",
+            5
+    );
+
+    String addReadingListMenuItemXPathLocator = "//*[@text='Add to reading list']";
+
+    waitForElementAndClick(
+            By.xpath(addReadingListMenuItemXPathLocator),
+            "Cannot find 'Add to reading list' menu item",
+            15
+    );
+
+
+    String gotItButtonIdLocator = "org.wikipedia:id/onboarding_button";
+
+    waitForElementAndClick(
+            By.id(gotItButtonIdLocator),
+            "Cannot find 'GOT IT' button",
+            5
+    );
+
+    waitForElementAndClear(
+            By.id("org.wikipedia:id/text_input"),
+            "Cannot find input to set name of articles folder",
+            15
+    );
+
+    String folderName = "Test";
+
+    waitForElementAndSendKeys(
+            By.id("org.wikipedia:id/text_input"),
+            folderName,
+            "Cannot put text into articles folder input",
+            5
+    );
+
+    waitForElementAndClick(
+            By.xpath("//*[@text='OK']"),
+            "Cannot press 'OK' button",
+            5
+    );
+
+    waitForElementAndClick(
+            By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+            "Cannot press 'Navigate up' button",
+            5
+    );
+
+//--------------------
+    waitForElementAndClick(
+            By.xpath("//*[contains(@text, 'Search Wikipedia')]"),
+            "Cannot find Search Wikipedia input",
+            5
+    );
+
+   waitForElementAndSendKeys(
+            By.xpath("//*[contains(@text, 'Search…')]"),
+            searchLine,
+            "Cannot find search input",
+            5
+    );
+
+
+
+    String secondArticleDescription = "Island of Indonesia";
+
+    waitForElementAndClick(
+            By.xpath(descriptionXPathLocator + "[@text='" + secondArticleDescription + "']"),
+            "Cannot find '" + secondArticleDescription + "'",
+            5
+    );
+
+    String secondArticleTitleName = "Java";
+
+    waitForElementPresent(
+            By.xpath(titleXPathLocator + "[@text='" + secondArticleTitleName + "']"),
+            "Cannot find article title - 'Java'",
+            15
+    );
+
+    waitForElementAndClick(
+            By.xpath(moreOptionsButtonXPathLocator),
+            "Cannot find 'More options' button",
+            5
+    );
+
+    waitForElementAndClick(
+            By.xpath(addReadingListMenuItemXPathLocator),
+            "Cannot find 'Add to reading list' menu item",
+            15
+    );
+
+    waitForElementAndClick(
+            By.xpath("//*[@text='" + folderName +"']"),
+            "Cannot find"  + folderName + "folder",
+            5
+    );
+
+    waitForElementAndClick(
+            By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+            "Cannot press 'Navigate up' button",
+            5
+    );
+
+    waitForElementAndClick(
+            By.xpath("//android.widget.FrameLayout[@content-desc='My lists']"),
+            "Cannot find navigation button to my list",
+            5
+    );
+
+    waitForElementAndClick(
+            By.xpath("//*[@text='" + folderName +"']"),
+            "Cannot find created folder",
+            5
+    );
+
+    swipeElementToLeft(
+            By.xpath("//*[@text='" + firstArticleTitleName + "']"),
+            "Cannot fine saved article"
+    );
+
+    waitForElementPresent(
+            By.xpath("//*[@text='" + secondArticleTitleName + "']"),
+            "Cannot find second article",
+            5
+    );
+
+    waitForElementAndClick(
+            By.xpath("//*[@text='" + secondArticleTitleName + "']"),
+            "Cannot open second article",
+            5
+    );
+
+    String secondArticleTitle = waitForElementAndGetAttribute(
+            By.xpath(titleXPathLocator + "[@text='" + secondArticleTitleName + "']"),
+            "text",
+            "Cannot find 'text' attribute",
+            15
+    );
+
+    Assert.assertEquals(
+           secondArticleTitle,
+           secondArticleTitleName
+    );
+  }
+
   private int waitForElementsAndCount(By by, String errorMessage, long timeoutInSeconds) {
     waitForElementPresent(by, errorMessage, timeoutInSeconds);
 
